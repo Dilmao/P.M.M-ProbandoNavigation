@@ -1,0 +1,23 @@
+package com.iessanalbertomagno.dam2.probandonavigation.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.iessanalbertomagno.dam2.probandonavigation.screens.FirstScreen
+import com.iessanalbertomagno.dam2.probandonavigation.screens.SecondScreen
+import com.iessanalbertomagno.dam2.probandonavigation.screens.ThirdScreen
+
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = AppScreens.FirstScreen.route) {
+        composable(route = AppScreens.FirstScreen.route) { FirstScreen(navController) }
+        composable(route = AppScreens.SecondScreen.route + "/{text}",
+            arguments = listOf(navArgument(name = "text") {type = NavType.StringType})
+        ) { SecondScreen(navController, it.arguments?.getString("text")) }
+        composable(route = AppScreens.ThirdScreen.route) { ThirdScreen(navController) }
+    }
+}
